@@ -1,57 +1,752 @@
 <!doctype html>
-<html>
-  <head>
-    <title>This is the title of the webpage!</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-  
-  <div id="demo">
-  <h2>The XMLHttpRequest Object</h2>
-  <button type="button" onclick="loadDoc()">Change Content</button>
-  </div>
-
-  <script>
-  function loadDoc() {
-    /* const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
-      document.getElementById("demo").innerHTML =
-      this.responseText;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fretcrawler &mdash; Technical Leader with a Manufacturing Mindset</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2129;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent-blue: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-purple: #bc8cff;
+      --accent-orange: #d29922;
+      --accent-red: #f85149;
+      --accent-cyan: #39d353;
+      --gradient-hero: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f778ba 100%);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+      --max-width: 960px;
+      --radius: 8px;
     }
-    xhttp.open("GET", "ajax_info.html");
-    xhttp.send(); */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent-blue); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--accent-purple); }
 
-    
+    /* ─── Layout ─── */
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
 
-    $.ajax({
-      url: "https://intra.uratex.com.ph/api/ux_sms/send",
-      type: "POST",
-      contentType: "application/json",
-      dataType: "json",
-      data: JSON.stringify({
-              "destination": "09178065038",
-              "text": "Demo for API Topic"
-            }),
-      success: function(data) {
-        
-      },
-      headers: {
-        "apikey": "7249b334e8b31e17b0d279b2ba8d4jau2",
-        "Origin": "https://fretcrawler.github.io"
-      },
-      error: function(xhr, status, error) {
-        console.error("Request failed:", status, error);
-      }
-    });
+    /* ─── Navigation ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,17,23,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    nav .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: -.02em; }
+    nav .logo span { background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    nav ul { list-style: none; display: flex; gap: 24px; }
+    nav ul li a { color: var(--text-secondary); font-size: .875rem; font-weight: 500; }
+    nav ul li a:hover { color: var(--text-primary); }
 
+    /* ─── Hero ─── */
+    .hero {
+      padding: 80px 0 64px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-avatar {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      box-shadow: 0 0 0 4px var(--bg-primary), 0 0 30px rgba(88,166,255,.2);
+      object-fit: cover;
+      object-position: center 25%;
+      margin-bottom: 24px;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .hero-avatar:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px var(--bg-primary), 0 0 40px rgba(88,166,255,.35);
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 500;
+      color: var(--accent-green);
+      margin-bottom: 24px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+      margin-bottom: 20px;
+    }
+    .hero h1 .gradient {
+      background: var(--gradient-hero);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero .summary {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+      margin-top: 36px;
+    }
+    .hero-stats .stat { text-align: center; }
+    .hero-stats .stat-value {
+      font-size: 2rem; font-weight: 800;
+      background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-stats .stat-label { font-size: .8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .06em; margin-top: 4px; }
 
+    /* ─── Section Headers ─── */
+    .section-label {
+      font-size: .75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--accent-blue); margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 1.75rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 12px;
+    }
+    .section-subtitle {
+      color: var(--text-secondary); font-size: 1rem; max-width: 640px; margin-bottom: 36px;
+    }
 
-    
-   
-  }
-  </script>
-    
-    
-    
-  </body>
+    /* ─── Cards Grid ─── */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+    .card:hover { background: var(--bg-card-hover); border-color: var(--accent-blue); transform: translateY(-2px); }
+    .card-icon { font-size: 1.6rem; margin-bottom: 14px; display: block; }
+    .card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+    .card p { color: var(--text-secondary); font-size: .9rem; line-height: 1.65; }
+    .card .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .tag {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .tag.blue { color: var(--accent-blue); border-color: rgba(88,166,255,.3); }
+    .tag.green { color: var(--accent-green); border-color: rgba(63,185,80,.3); }
+    .tag.purple { color: var(--accent-purple); border-color: rgba(188,140,255,.3); }
+    .tag.orange { color: var(--accent-orange); border-color: rgba(210,153,34,.3); }
+
+    /* ─── Operations / Team ─── */
+    .ops-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .ops-metric {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; text-align: center;
+    }
+    .ops-metric .metric-val {
+      font-size: 2.4rem; font-weight: 800; line-height: 1;
+      background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .ops-metric .metric-label { font-size: .8rem; color: var(--text-secondary); margin-top: 6px; text-transform: uppercase; letter-spacing: .06em; }
+    .ops-breakdown {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 28px;
+    }
+    .ops-breakdown h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; }
+    .breakdown-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-role { font-size: .9rem; }
+    .breakdown-count {
+      font-weight: 700; font-family: var(--font-mono); font-size: .9rem;
+      color: var(--accent-green);
+    }
+
+    /* ─── Philosophy ─── */
+    .philosophy-block {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 36px; margin-bottom: 24px;
+    }
+    .philosophy-block h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; }
+    .philosophy-block p { color: var(--text-secondary); font-size: .95rem; }
+    .philosophy-block .highlight {
+      color: var(--accent-blue); font-weight: 600;
+    }
+    blockquote {
+      border-left: 3px solid var(--accent-purple);
+      padding: 16px 24px;
+      margin: 24px 0;
+      background: rgba(188,140,255,.05);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+
+    /* ─── Value Stream Diagram ─── */
+    .vsm-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap; margin: 32px 0;
+    }
+    .vsm-step {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 22px;
+      text-align: center; min-width: 140px;
+      transition: border-color .2s;
+    }
+    .vsm-step:hover { border-color: var(--accent-blue); }
+    .vsm-step .step-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
+    .vsm-step .step-name { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .vsm-step .step-time { font-size: .7rem; color: var(--accent-green); margin-top: 4px; font-family: var(--font-mono); }
+    .vsm-arrow {
+      color: var(--text-secondary); font-size: 1.2rem; padding: 0 6px;
+      flex-shrink: 0;
+    }
+
+    /* ─── Hybrid Table ─── */
+    .hybrid-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 24px 0;
+    }
+    .hybrid-table thead th {
+      background: var(--bg-card);
+      padding: 14px 20px;
+      font-size: .8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent-blue);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .hybrid-table tbody td {
+      padding: 14px 20px;
+      font-size: .9rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .hybrid-table tbody tr:last-child td { border-bottom: none; }
+    .hybrid-table tbody tr:hover { background: var(--bg-card-hover); }
+    .hybrid-table .concept { color: var(--text-primary); font-weight: 500; }
+
+    /* ─── Tech Stack ─── */
+    .stack-category { margin-bottom: 28px; }
+    .stack-category h4 {
+      font-size: .8rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent-purple); margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    .stack-items { display: flex; flex-wrap: wrap; gap: 8px; }
+    .stack-item {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 8px 16px;
+      font-size: .85rem; font-weight: 500;
+      transition: border-color .2s, background .2s;
+    }
+    .stack-item:hover { border-color: var(--accent-blue); background: var(--bg-card-hover); }
+
+    /* ─── Mission Statement ─── */
+    .mission {
+      text-align: center; padding: 64px 0;
+    }
+    .mission-text {
+      font-size: 1.35rem; font-weight: 300; line-height: 1.8;
+      max-width: 700px; margin: 0 auto 32px;
+      color: var(--text-secondary);
+    }
+    .mission-text strong {
+      color: var(--text-primary); font-weight: 600;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer p { color: var(--text-secondary); font-size: .8rem; }
+    footer .footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 24px; }
+    footer .footer-links a { color: var(--text-secondary); font-size: .8rem; }
+
+    /* ─── Standards Badge ─── */
+    .standards-row {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;
+    }
+    .std-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 6px 14px;
+      font-size: .75rem; font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .std-badge .std-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-green); display: inline-block;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .ops-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      nav ul { gap: 14px; }
+      .vsm-flow { flex-direction: column; }
+      .vsm-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Navigation ═══ -->
+  <nav>
+    <div class="container">
+      <div class="logo"><span>Jhun Espinosa</span></div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#operations">Operations</a></li>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#stack">Stack</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══ Hero / Professional Summary ═══ -->
+  <header class="hero">
+    <div class="container">
+      <img src="me.jpeg" alt="Profile photo" class="hero-avatar" width="140" height="140">
+      <span class="hero-badge">&#9679; Open to Strategic Collaborations</span>
+      <h1>
+        Technical Leader with a<br>
+        <span class="gradient">Manufacturing Mindset</span>
+      </h1>
+      <p class="summary">
+        I am a Senior Application Development Manager who transforms enterprise software delivery
+        by applying <strong>Lean Manufacturing discipline</strong> to the full Software Development Life Cycle.
+        With 15+ years bridging plant floors and production codebases at <strong>Uratex Philippines</strong>,
+        I lead a 23-person multidisciplinary team that treats every sprint as a production line &mdash;
+        where waste is measured, quality is engineered in, and value is delivered continuously.
+        My unique edge: I understand how every line of code impacts the <strong>physical supply chain</strong>.
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-value">15+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">23</div>
+          <div class="stat-label">Team Members</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Domains Mastered</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">SAP &rarr; AI</div>
+          <div class="stat-label">Full Spectrum</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ Why Me — Skills Matrix ═══ -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">Why Me</div>
+      <h2 class="section-title">The Intersection of Code, Strategy &amp; Operations</h2>
+      <p class="section-subtitle">
+        Most managers choose one lane. I built my career at the intersection of three &mdash;
+        because real digital transformation demands fluency across all of them.
+      </p>
+
+      <div class="cards">
+        <!-- Technical Excellence -->
+        <div class="card">
+          <span class="card-icon">&#128640;</span>
+          <h3>Technical Excellence</h3>
+          <p>
+            Deep hands-on expertise from SAP core systems to modern AI-driven applications.
+            I architect solutions that scale across enterprise ERP, web platforms, and intelligent automation.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">SAP ABAP</span>
+            <span class="tag blue">ALE / IDoc</span>
+            <span class="tag blue">SAP Gateway</span>
+            <span class="tag blue">3rd-Party Integration</span>
+            <span class="tag purple">AI-Driven Dev</span>
+            <span class="tag green">Next.js</span>
+            <span class="tag green">Node.js</span>
+            <span class="tag green">Python</span>
+            <span class="tag orange">ETL Pipelines</span>
+          </div>
+        </div>
+
+        <!-- Strategic Management -->
+        <div class="card">
+          <span class="card-icon">&#127919;</span>
+          <h3>Strategic Management</h3>
+          <p>
+            I translate business objectives into executable engineering roadmaps. My teams operate
+            under Agile/Scrum aligned with ISO/IEC 25010 quality standards and IEEE 1028 review processes.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">Agile / Scrum</span>
+            <span class="tag blue">Business Planning</span>
+            <span class="tag purple">Demand Forecasting</span>
+            <span class="tag purple">Capacity Planning</span>
+            <span class="tag green">POLC Framework</span>
+            <span class="tag orange">Stakeholder Mgmt</span>
+          </div>
+        </div>
+
+        <!-- Operational Rigor -->
+        <div class="card">
+          <span class="card-icon">&#9881;&#65039;</span>
+          <h3>Operational Rigor</h3>
+          <p>
+            Certified in Lean Manufacturing, Pollution Control, and Labor Law compliance.
+            I bring a factory-floor mindset to every deployment pipeline and QA gate.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">Lean Manufacturing</span>
+            <span class="tag green">PCO Certified</span>
+            <span class="tag purple">Labor Law</span>
+            <span class="tag orange">4 Pillars (POLC)</span>
+            <span class="tag blue">ISO 9001</span>
+            <span class="tag green">Continuous Improvement</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="standards-row">
+        <span class="std-badge"><span class="std-dot"></span> ISO/IEC 25010 &mdash; Software Quality</span>
+        <span class="std-badge"><span class="std-dot"></span> IEEE 1028 &mdash; Review &amp; Audit</span>
+        <span class="std-badge"><span class="std-dot"></span> IEEE 829 &mdash; Test Documentation</span>
+        <span class="std-badge"><span class="std-dot"></span> ISO 9001 &mdash; Quality Management</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Current Operations ═══ -->
+  <section id="operations">
+    <div class="container">
+      <div class="section-label">Current Operations</div>
+      <h2 class="section-title">Leading a 23-Person Multidisciplinary Team at Uratex</h2>
+      <p class="section-subtitle">
+        I manage the full application lifecycle for one of the Philippines' largest manufacturing
+        enterprises &mdash; from business requirements through deployment and 24/7 operations support.
+      </p>
+
+      <div class="ops-grid">
+        <div>
+          <div class="ops-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 20px;">
+            <div class="ops-metric">
+              <div class="metric-val">13</div>
+              <div class="metric-label">Application Developers</div>
+            </div>
+            <div class="ops-metric">
+              <div class="metric-val">6</div>
+              <div class="metric-label">Quality Assurance</div>
+            </div>
+            <div class="ops-metric">
+              <div class="metric-val">4</div>
+              <div class="metric-label">Business Systems Analysts</div>
+            </div>
+            <div class="ops-metric">
+              <div class="metric-val">23</div>
+              <div class="metric-label">Total Headcount</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ops-breakdown">
+          <h3>&#128202; Operational Scope</h3>
+          <div class="breakdown-row">
+            <span class="breakdown-role">&#127981; SAP ERP &amp; Enterprise Systems</span>
+            <span class="breakdown-count">24/7</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-role">&#128736;&#65039; Custom App Development</span>
+            <span class="breakdown-count">Agile</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-role">&#9989; QA &amp; Test Automation</span>
+            <span class="breakdown-count">ISO 25010</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-role">&#128200; Business Analysis &amp; Demand</span>
+            <span class="breakdown-count">POLC</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-role">&#129302; AI &amp; Intelligent Automation</span>
+            <span class="breakdown-count">Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Tech Philosophy ═══ -->
+  <section id="philosophy">
+    <div class="container">
+      <div class="section-label">Tech Philosophy</div>
+      <h2 class="section-title">Lean Manufacturing &times; Software Development</h2>
+      <p class="section-subtitle">
+        I apply the same principles that eliminate waste on a production floor to eliminate
+        "digital waste" across the SDLC &mdash; because inefficient code is as costly as an idle machine.
+      </p>
+
+      <div class="philosophy-block">
+        <h3>&#127919; Eliminating the 8 Wastes of Software</h3>
+        <p>
+          In Lean Manufacturing, we target <span class="highlight">DOWNTIME</span> &mdash; Defects, Overproduction,
+          Waiting, Non-utilized talent, Transportation, Inventory, Motion, and Extra-processing.
+          I map these directly to software: <span class="highlight">defects</span> become bugs escaping QA,
+          <span class="highlight">overproduction</span> becomes gold-plated features nobody requested,
+          <span class="highlight">inventory</span> becomes unmerged branches and stale PRs, and
+          <span class="highlight">waiting</span> becomes blocked developers waiting on approvals.
+          Every sprint retrospective is a <em>Kaizen event</em>.
+        </p>
+      </div>
+
+      <div class="philosophy-block">
+        <h3>&#128301; Value Stream Mapping &mdash; From Requirement to Deployment</h3>
+        <p>
+          I use Value Stream Mapping (VSM) to visualize and optimize the flow from a business
+          requirement to a deployed, production-ready feature. The goal: reduce lead time, eliminate
+          handoff friction, and ensure every activity adds measurable value.
+        </p>
+        <!-- VSM Flow Diagram -->
+        <div class="vsm-flow">
+          <div class="vsm-step">
+            <span class="step-icon">&#128203;</span>
+            <div class="step-name">BSA Intake</div>
+            <div class="step-time">&le; 2 days</div>
+          </div>
+          <div class="vsm-arrow">&rarr;</div>
+          <div class="vsm-step">
+            <span class="step-icon">&#128736;&#65039;</span>
+            <div class="step-name">Sprint Planning</div>
+            <div class="step-time">1 day</div>
+          </div>
+          <div class="vsm-arrow">&rarr;</div>
+          <div class="vsm-step">
+            <span class="step-icon">&#128187;</span>
+            <div class="step-name">Development</div>
+            <div class="step-time">5&ndash;10 days</div>
+          </div>
+          <div class="vsm-arrow">&rarr;</div>
+          <div class="vsm-step">
+            <span class="step-icon">&#128270;</span>
+            <div class="step-name">QA &amp; Testing</div>
+            <div class="step-time">2&ndash;3 days</div>
+          </div>
+          <div class="vsm-arrow">&rarr;</div>
+          <div class="vsm-step">
+            <span class="step-icon">&#128640;</span>
+            <div class="step-name">Deploy</div>
+            <div class="step-time">&le; 1 day</div>
+          </div>
+          <div class="vsm-arrow">&rarr;</div>
+          <div class="vsm-step">
+            <span class="step-icon">&#128200;</span>
+            <div class="step-name">Monitor</div>
+            <div class="step-time">Continuous</div>
+          </div>
+        </div>
+      </div>
+
+      <blockquote>
+        "The most dangerous kind of waste is the waste we do not recognize."
+        &mdash; <strong>Shigeo Shingo</strong>, Co-architect of the Toyota Production System
+      </blockquote>
+
+      <!-- Hybrid Experience Table -->
+      <h3 style="font-size: 1.1rem; font-weight: 600; margin: 36px 0 16px;">
+        &#128256; The Hybrid Advantage: Manufacturing &rarr; IT Leadership
+      </h3>
+      <table class="hybrid-table">
+        <thead>
+          <tr>
+            <th>Manufacturing Concept</th>
+            <th>Application in IT Management</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="concept">&#127981; Lean Manufacturing</td>
+            <td>Eliminating "waste" in the Sprint Backlog &mdash; no gold-plating, no zombie tickets, no context-switching overhead.</td>
+          </tr>
+          <tr>
+            <td class="concept">&#128200; Demand Forecasting</td>
+            <td>Resource allocation and capacity planning for the Dev team. Predicting sprint velocity using historical throughput data.</td>
+          </tr>
+          <tr>
+            <td class="concept">&#9851;&#65039; Pollution Control (PCO)</td>
+            <td>"Code Hygiene" and Technical Debt management. Treating code smells like environmental pollutants &mdash; measure, report, remediate.</td>
+          </tr>
+          <tr>
+            <td class="concept">&#9881;&#65039; Plant Management</td>
+            <td>Managing high-availability systems (SAP) for 24/7 operations. Uptime is not optional when the factory never sleeps.</td>
+          </tr>
+          <tr>
+            <td class="concept">&#128203; Quality Control (QC)</td>
+            <td>Automated test suites as "inspection stations." Every build passes through gates per ISO/IEC 25010 quality attributes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ Managerial Tech Stack ═══ -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-label">Managerial Tech Stack</div>
+      <h2 class="section-title">Not Just Languages &mdash; The Full Management Arsenal</h2>
+      <p class="section-subtitle">
+        A leader's stack includes methodologies, governance frameworks, and organizational tools &mdash;
+        not just programming languages.
+      </p>
+
+      <div class="cards" style="grid-template-columns: 1fr 1fr;">
+        <div>
+          <div class="stack-category">
+            <h4>&#128736;&#65039; Methodologies</h4>
+            <div class="stack-items">
+              <span class="stack-item">Scrum</span>
+              <span class="stack-item">Kanban</span>
+              <span class="stack-item">XP (Extreme Programming)</span>
+              <span class="stack-item">Lean-Agile</span>
+              <span class="stack-item">SAFe (Scaled Agile)</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <h4>&#128187; Development &amp; Architecture</h4>
+            <div class="stack-items">
+              <span class="stack-item">SAP ABAP</span>
+              <span class="stack-item">ALE / IDoc</span>
+              <span class="stack-item">SAP Gateway / OData</span>
+              <span class="stack-item">Next.js</span>
+              <span class="stack-item">Node.js</span>
+              <span class="stack-item">Python</span>
+              <span class="stack-item">ETL / Data Pipelines</span>
+              <span class="stack-item">AI / ML Integration</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <h4>&#129302; AI-Driven Development</h4>
+            <div class="stack-items">
+              <span class="stack-item">LLM Integration</span>
+              <span class="stack-item">Intelligent Automation</span>
+              <span class="stack-item">AI-Assisted Code Review</span>
+              <span class="stack-item">Predictive Analytics</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="stack-category">
+            <h4>&#128202; Team &amp; Project Tools</h4>
+            <div class="stack-items">
+              <span class="stack-item">Jira</span>
+              <span class="stack-item">Azure DevOps</span>
+              <span class="stack-item">GitHub Enterprise</span>
+              <span class="stack-item">Confluence</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <h4>&#9989; QA &amp; Governance Standards</h4>
+            <div class="stack-items">
+              <span class="stack-item">ISO/IEC 25010</span>
+              <span class="stack-item">IEEE 1028</span>
+              <span class="stack-item">IEEE 829</span>
+              <span class="stack-item">ISO 9001</span>
+              <span class="stack-item">POLC Framework</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <h4>&#128220; Compliance &amp; Certifications</h4>
+            <div class="stack-items">
+              <span class="stack-item">Lean Manufacturing</span>
+              <span class="stack-item">Pollution Control Officer</span>
+              <span class="stack-item">Labor Law Compliance</span>
+              <span class="stack-item">4 Pillars of Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Mission Statement ═══ -->
+  <section class="mission">
+    <div class="container">
+      <div class="section-label">Mission Statement</div>
+      <h2 class="section-title">Built at the Intersection of Factory &amp; Code</h2>
+      <p class="mission-text">
+        I exist at the rare intersection where <strong>manufacturing discipline</strong> meets
+        <strong>software innovation</strong>. At Uratex Philippines, I have spent over a decade
+        proving that the principles which optimize a production line &mdash; eliminate waste,
+        engineer quality in, respect every person, and pursue perfection &mdash; are the same
+        principles that build <strong>world-class software teams</strong>. My mission is to
+        lead engineering organizations that deliver measurable business value with the
+        <strong>precision of a factory</strong> and the <strong>agility of a startup</strong>.
+      </p>
+      <div class="standards-row" style="justify-content: center;">
+        <span class="std-badge"><span class="std-dot"></span> Lean &middot; Agile &middot; Disciplined</span>
+        <span class="std-badge"><span class="std-dot"></span> Code &middot; Compliance &middot; Culture</span>
+        <span class="std-badge"><span class="std-dot"></span> Measure &middot; Improve &middot; Repeat</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Footer ═══ -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 fretcrawler &mdash; Technical Leader with a Manufacturing Mindset</p>
+      <div class="footer-links">
+        <a href="https://github.com/fretcrawler" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#philosophy">Philosophy</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
 </html>
