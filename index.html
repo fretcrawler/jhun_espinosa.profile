@@ -325,6 +325,94 @@
     }
     .stack-item:hover { border-color: var(--accent-blue); background: var(--bg-card-hover); }
 
+    /* ─── Projects ─── */
+    .project-link {
+      display: inline-flex;
+      margin-top: 16px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--accent-blue);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .project-link:hover { color: var(--text-primary); }
+
+    /* ─── Project Modal ─── */
+    .project-modal {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, .65);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      padding: 12px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .32s cubic-bezier(.2,.72,.28,1), visibility 0s linear .32s;
+    }
+    .project-modal.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity .36s cubic-bezier(.2,.72,.28,1);
+    }
+    .project-modal-dialog {
+      width: min(1200px, 96vw);
+      max-height: 92vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+      padding: 18px;
+      opacity: 0;
+      transform: translateY(22px) scale(.97);
+      transition: opacity .26s ease, transform .42s cubic-bezier(.2,.72,.28,1);
+    }
+    .project-modal.open .project-modal-dialog {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .project-modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .project-modal-top h3 {
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      line-height: 1.25;
+    }
+    .project-modal-close {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .project-modal-close:hover { color: var(--text-primary); border-color: var(--accent-blue); }
+    .project-modal-frame {
+      width: 100%;
+      height: min(78vh, 860px);
+      min-height: 0;
+      border: none;
+      border-radius: 10px;
+      background: var(--bg-primary);
+    }
+
     /* ─── Mission Statement ─── */
     .mission {
       text-align: center; padding: 64px 0;
@@ -371,6 +459,23 @@
       .vsm-flow { flex-direction: column; }
       .vsm-arrow { transform: rotate(90deg); }
 
+      .project-modal { padding: 0; }
+      .project-modal-dialog {
+        width: 100vw;
+        max-height: 100vh;
+        min-height: 100vh;
+        border-radius: 0;
+        padding: 10px;
+      }
+      .project-modal-top { margin-bottom: 10px; }
+      .project-modal-frame {
+        height: calc(100vh - 64px);
+        border-radius: 8px;
+      }
+      .project-modal-top h3 {
+        font-size: 1.05rem;
+      }
+
       /* ─── Mobile Nav ─── */
       .nav-hamburger { display: flex; }
       nav .container { flex-wrap: wrap; }
@@ -408,6 +513,7 @@
         <li><a href="#operations">Operations</a></li>
         <li><a href="#philosophy">Philosophy</a></li>
         <li><a href="#stack">Stack</a></li>
+        <li><a href="#projects">Projects</a></li>
       </ul>
     </div>
   </nav>
@@ -416,7 +522,7 @@
   <header id="about" class="hero">
     <div class="container">
       <div class="hero-avatar">
-        <img src="me.jpeg" alt="Profile photo" class="hero-avatar-image" width="140" height="140">
+        <img src="images/me.jpeg" alt="Profile photo" class="hero-avatar-image" width="140" height="140">
       </div>
       <span class="hero-badge">&#9679; Open to Strategic Collaborations</span>
       <h1>
@@ -785,6 +891,120 @@
     </div>
   </section>
 
+  <!-- ═══ Project Highlights ═══ -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">Project Highlights</div>
+      <h2 class="section-title">Selected Projects and Delivery Impact</h2>
+      <p class="section-subtitle">
+        A focused view of major systems I have led, from platform architecture to enterprise integration.
+        Each card links to a dedicated project page with scope, stack, and outcomes.
+      </p>
+
+      <div class="cards">
+        <article class="card">
+          <span class="card-icon">&#127981;</span>
+          <h3>MES (Manufacturing Execution System)</h3>
+          <p>
+            Built and integrated MES workflows with SAP, POS, and related systems to provide real-time
+            production visibility and synchronized operational data.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">MES</span>
+            <span class="tag green">SAP Integration</span>
+            <span class="tag purple">POS Sync</span>
+          </div>
+          <button type="button" class="project-link project-open" data-project-file="project-mes.html" data-project-title="MES (Manufacturing Execution System)">View project highlight &rarr;</button>
+        </article>
+
+        <article class="card">
+          <span class="card-icon">&#128203;</span>
+          <h3>Project Management System Development</h3>
+          <p>
+            Developed a centralized project management platform for planning, execution, issue tracking,
+            and cross-team transparency across delivery streams.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">Planning</span>
+            <span class="tag green">Tracking</span>
+            <span class="tag orange">Governance</span>
+          </div>
+          <button type="button" class="project-link project-open" data-project-file="project-pms.html" data-project-title="Project Management System Development">View project highlight &rarr;</button>
+        </article>
+
+        <article class="card">
+          <span class="card-icon">&#128200;</span>
+          <h3>Digitization Projects for Manufacturing</h3>
+          <p>
+            Led digitization initiatives that converted manual workflows into measurable digital processes,
+            improving cycle times, traceability, and reporting quality.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">Digitization</span>
+            <span class="tag purple">Process Design</span>
+            <span class="tag green">Continuous Improvement</span>
+          </div>
+          <button type="button" class="project-link project-open" data-project-file="project-digitization.html" data-project-title="Digitization Projects for Manufacturing">View project highlight &rarr;</button>
+        </article>
+
+        <article class="card">
+          <span class="card-icon">&#128279;</span>
+          <h3>SAP API Development</h3>
+          <p>
+            Designed and delivered SAP API services to enable secure and scalable system-to-system
+            integration for enterprise applications and partner tools.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">SAP Gateway</span>
+            <span class="tag green">OData/API</span>
+            <span class="tag orange">Integration</span>
+          </div>
+          <button type="button" class="project-link project-open" data-project-file="project-sap-api.html" data-project-title="SAP API Development">View project highlight &rarr;</button>
+        </article>
+
+        <article class="card">
+          <span class="card-icon">&#128230;</span>
+          <h3>OMS (Order Management System)</h3>
+          <p>
+            Delivered an order management platform fully integrated with SAP, MES, and Fleet Management
+            System to connect order flow from planning through fulfillment.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">SAP</span>
+            <span class="tag green">MES</span>
+            <span class="tag orange">Fleet Management</span>
+          </div>
+          <button type="button" class="project-link project-open" data-project-file="project-oms.html" data-project-title="OMS (Order Management System)">View project highlight &rarr;</button>
+        </article>
+
+        <article class="card">
+          <span class="card-icon">&#128200;</span>
+          <h3>Personal Project: Trading Bot</h3>
+          <p>
+            Built an automated trading bot platform connected to multiple crypto exchanges with unified
+            strategy execution and risk controls.
+          </p>
+          <div class="tag-list">
+            <span class="tag blue">Binance</span>
+            <span class="tag green">OKX</span>
+            <span class="tag purple">BingX</span>
+          </div>
+          <button type="button" class="project-link project-open" data-project-file="project-trading-bot.html" data-project-title="Personal Project: Trading Bot">View project highlight &rarr;</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div id="project-modal" class="project-modal" aria-hidden="true">
+    <div class="project-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+      <div class="project-modal-top">
+        <h3 id="project-modal-title"></h3>
+        <button type="button" id="project-modal-close" class="project-modal-close" aria-label="Close project details">&times;</button>
+      </div>
+      <iframe id="project-modal-frame" class="project-modal-frame" title="Project details"></iframe>
+    </div>
+  </div>
+
   <!-- ═══ Mission Statement ═══ -->
   <section class="mission">
     <div class="container">
@@ -823,6 +1043,11 @@
   <script>
     const navToggle = document.getElementById('nav-toggle');
     const navLinks = document.querySelectorAll('nav ul a');
+    const projectOpenButtons = document.querySelectorAll('.project-open');
+    const projectModal = document.getElementById('project-modal');
+    const projectModalClose = document.getElementById('project-modal-close');
+    const projectModalTitle = document.getElementById('project-modal-title');
+    const projectModalFrame = document.getElementById('project-modal-frame');
     const revealSelector = [
       '.hero-avatar', '.hero-badge', '.hero h1', '.hero .summary', '.hero-stats .stat',
       '.section-label', '.section-title', '.section-subtitle',
@@ -832,6 +1057,45 @@
       '.stack-category', '.stack-item',
       '.mission .section-label', '.mission .section-title', '.mission-text'
     ].join(', ');
+
+    function resizeProjectFrame() {
+      if (!projectModal.classList.contains('open')) return;
+
+      const viewportMax = window.innerWidth <= 768 ? window.innerHeight - 64 : Math.min(window.innerHeight * 0.78, 860);
+
+      try {
+        const frameDoc = projectModalFrame.contentDocument || projectModalFrame.contentWindow.document;
+        if (!frameDoc || !frameDoc.body) return;
+
+        const contentHeight = Math.max(
+          frameDoc.body.scrollHeight,
+          frameDoc.documentElement ? frameDoc.documentElement.scrollHeight : 0
+        );
+
+        projectModalFrame.style.height = `${Math.min(Math.max(contentHeight, 320), viewportMax)}px`;
+      } catch (error) {
+        projectModalFrame.style.height = `${viewportMax}px`;
+      }
+    }
+
+    function openProjectModal(projectFile, projectTitle) {
+      if (!projectFile) return;
+
+      projectModalTitle.textContent = projectTitle || 'Project Details';
+      projectModalFrame.onload = resizeProjectFrame;
+      projectModalFrame.src = projectFile;
+
+      projectModal.classList.add('open');
+      projectModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectModal() {
+      projectModal.classList.remove('open');
+      projectModal.setAttribute('aria-hidden', 'true');
+      projectModalFrame.src = 'about:blank';
+      document.body.style.overflow = '';
+    }
 
     function animateSection(sectionId) {
       if (!sectionId) return;
@@ -863,6 +1127,28 @@
         setTimeout(() => animateSection(targetId), 120);
       });
     });
+
+    projectOpenButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        openProjectModal(button.dataset.projectFile, button.dataset.projectTitle);
+      });
+    });
+
+    projectModalClose.addEventListener('click', closeProjectModal);
+
+    projectModal.addEventListener('click', (event) => {
+      if (event.target === projectModal) {
+        closeProjectModal();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && projectModal.classList.contains('open')) {
+        closeProjectModal();
+      }
+    });
+
+    window.addEventListener('resize', resizeProjectFrame);
   </script>
 
 </body>

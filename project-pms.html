@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Management System Highlight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent: #58a6ff;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+    .page { padding: 0; }
+    .project-banner {
+      aspect-ratio: 21 / 8;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      background: #050b14;
+    }
+    .project-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .subtitle { color: var(--text-secondary); margin-bottom: 16px; }
+    .content { display: grid; gap: 16px; }
+    .block { border-top: 1px solid var(--border); padding-top: 14px; }
+    h2 { font-size: .78rem; margin-bottom: 8px; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
+    p, li { color: var(--text-secondary); }
+    ul { padding-left: 18px; display: grid; gap: 4px; }
+    @media (max-width: 768px) {
+      .project-banner { margin-bottom: 12px; border-radius: 10px; }
+      .subtitle { margin-bottom: 12px; font-size: .95rem; }
+      .content { gap: 12px; }
+      .block { padding-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <article>
+      <div class="project-banner">
+        <img src="images/project_management.png" alt="Project management system banner">
+      </div>
+      <p class="subtitle">Centralized execution, monitoring, and governance for multi-team software delivery.</p>
+      <div class="content">
+        <section class="block">
+          <h2>Overview</h2>
+          <p>Developed a project management system that unifies planning, sprint execution, issue tracking, and status reporting to improve decision-making and delivery predictability.</p>
+        </section>
+        <section class="block">
+          <h2>Scope</h2>
+          <ul>
+            <li>Requirements and workflow mapping with stakeholders</li>
+            <li>Feature modules for planning, assignments, and milestones</li>
+            <li>Progress dashboards and risk visibility</li>
+            <li>Standardized governance and reporting routines</li>
+          </ul>
+        </section>
+        <section class="block">
+          <h2>Business Value</h2>
+          <ul>
+            <li>Better cross-functional alignment and transparency</li>
+            <li>Faster issue escalation and resolution</li>
+            <li>More consistent project execution cadence</li>
+          </ul>
+        </section>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

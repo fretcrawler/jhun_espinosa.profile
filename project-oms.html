@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMS Project Highlight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent: #58a6ff;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+    .page { padding: 0; }
+    .project-banner {
+      aspect-ratio: 21 / 8;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #07111e 0%, #122843 55%, #0a1624 100%);
+      display: grid;
+      place-items: center;
+    }
+    .project-banner-fallback {
+      font-size: clamp(1rem, 3vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--text-primary);
+      text-align: center;
+      padding: 24px;
+    }
+    .subtitle { color: var(--text-secondary); margin-bottom: 16px; }
+    .content { display: grid; gap: 16px; }
+    .block { border-top: 1px solid var(--border); padding-top: 14px; }
+    h2 { font-size: .78rem; margin-bottom: 8px; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
+    p, li { color: var(--text-secondary); }
+    ul { padding-left: 18px; display: grid; gap: 4px; }
+    @media (max-width: 768px) {
+      .project-banner { margin-bottom: 12px; border-radius: 10px; }
+      .subtitle { margin-bottom: 12px; font-size: .95rem; }
+      .content { gap: 12px; }
+      .block { padding-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <article>
+      <div class="project-banner">
+        <div class="project-banner-fallback">Order Management System</div>
+      </div>
+      <p class="subtitle">Order management platform fully integrated with SAP, MES, and Fleet Management System.</p>
+      <div class="content">
+        <section class="block">
+          <h2>Overview</h2>
+          <p>Designed and delivered an Order Management System that connects order capture, production coordination, and fulfillment visibility through tight integration with SAP, MES, and the Fleet Management System.</p>
+        </section>
+        <section class="block">
+          <h2>Scope</h2>
+          <ul>
+            <li>Order lifecycle workflow design from intake to delivery</li>
+            <li>SAP integration for customer, item, and order transaction synchronization</li>
+            <li>MES linkage for production status and execution visibility</li>
+            <li>Fleet Management integration for dispatch scheduling and delivery tracking</li>
+          </ul>
+        </section>
+        <section class="block">
+          <h2>Business Value</h2>
+          <ul>
+            <li>Improved end-to-end visibility across ordering, production, and delivery</li>
+            <li>Reduced manual coordination between enterprise and operations teams</li>
+            <li>Faster order fulfillment decisions based on connected real-time data</li>
+          </ul>
+        </section>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
